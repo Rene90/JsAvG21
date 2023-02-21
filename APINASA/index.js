@@ -41,11 +41,82 @@ var listaFotos = respMarjson.photos
 listaFotos.forEach(foto=>{
 	console.log(foto.camera)
 })*/
+function fechaHoy(){
+	var hoy = new Date()
+	var dd =String(hoy.getDate()).padStart(2,'0')
+	var mm =String(hoy.getMonth()+1).padStart(2,'0')
+	var yyyy = hoy.getFullYear()
+	hoy = yyyy+"-"+mm+"-"+dd
+	return hoy
+}
+
+
+const marte = async(rov,cam,sol)=>{
+
+	let fechaFoto = fechaHoy()
+	var martianApi = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rov}/photos?sol=${sol}&camera=${cam}&api_key=${key}`
+    var fotoDia = `https://api.nasa.gov/planetary/apod?start_date=${fechaFoto}&end_date=${fechaFoto}&api_key=${key}`
+	const fotoDresult = await fetch(fotoDia)
+	const fres = await fotoDresult.json()
+	const resultadoMarte = await fetch(martianApi)
+	const resultadoMarteJson = await resultadoMarte.json()
+	let arregloFotos = resultadoMarteJson.photos
+	let cartasDiv = document.getElementById("contenedorCartas")
+
+	while(cartasDiv.firstChild){
+		cartasDiv.removeChild(cartasDiv.firstChild)
+	}
+	if (arregloFotos.length ==0){
+		cartasDiv.innerHTML = ` <div class="card  text-center col-sm-12 col-md-12 col-lg-12 justify-content-center" style="width: %100;">
+		<img class="card-img-top" src=${fres[0].url} alt=${fres[0].id}>
+		<div class="card-body">
+		  <h5 class="card-title">${fres[0].title}</h5>
+		  <p class="card-text">${fres[0].explanation}</p>
+		  
+		
+		</div>
+	  </div>
+		
+		`
+
+
+	}
+	else{
+		arregloFotos.forEach(foto=>{
+			cartasDiv.innerHTML += ` <div class="card mb-2 col-sm-12 col-md-6 col-lg-4" style="width: 18rem;">
+			<img class="card-img-top" src=${foto.img_src} alt=${foto.id}>
+			<div class="card-body">
+			  <h5 class="card-title">${foto.rover.name}</h5>
+			  <p class="card-text">${foto.camera.full_name}</p>
+			  <p class="card-text">Foto tomada el dia :${foto.earth_date}</p>
+			
+			</div>
+		  </div>
+			
+			`
+	
+	
+		})
+
+	}
+	
+
+
+}
+
+
+
 function traerDatos(){
 
 	let rover = document.getElementById("roverid")
+	let solar =document.getElementById("solarid") 
+	let camara = document.getElementById("camaraid")
+	
 	let roverTexto = rover.value
-	console.log(roverTexto)
+	let camaraTexto = camara.value
+	let solarTexto = solar.value
+	console.log(roverTexto, camaraTexto, solarTexto)
+	marte(roverTexto,camaraTexto,String(solarTexto))
 }
 
 

@@ -25,6 +25,25 @@
                     </select>
 
                 </div>
+                <div class="col">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Selecciona la camara</label>
+                    <select class="custom-select mr-sm-2"  id="camaraid">
+                        <option selected>Elegir ...</option>
+                        <option value="FHAZ">Front Hazard Avoidance Camera</option>
+                        <option value="RHAZ">Rear Hazard Avoidance Camera</option>
+                        <option value="MAST"> Mast Camera</option>
+                        <option value="CHEMCAM">Chemistry and Camera Complex</option>
+                        <option value="MAHLI"> Mars Hand Lens Imager</option>
+                        <option value="MARDI"> Mars Descent Imager</option>
+                        <option value="NAVCAM">Navigation Camera</option>
+                        <option value="PANCAM"> Panoramic Camera</option>
+                        <option value="MINITES">Miniature Thermal Emission Spectrometer (Mini-TES)</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Introduce el dia solar</label>
+                    <input type="number" id="solarid" class="form-control" placeholder="1" value="1000">
+                </div>
 
             </div>
 
@@ -33,6 +52,9 @@
 
                 </div>
         </form>
+        <div class="row mt-4" id="contenedorCartas">
+
+        </div>
 
 
 
